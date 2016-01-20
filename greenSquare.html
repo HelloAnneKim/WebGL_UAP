@@ -47,6 +47,13 @@
                         program = gl.createProgram();
                         gl.attachShader(program, vs);
                         gl.attachShader(program, fs);
+
+                        if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS))
+                            console.log(gl.getShaderInfoLog(vs));
+                        if (!gl.getShaderParameter(fs, gl.COMPILE_STATUS))
+                            console.log(gl.getShaderInfoLog(fs));
+                        if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+                            console.log(gl.getProgramInfoLog(program));
                         
                     }
             </script>
