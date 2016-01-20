@@ -47,6 +47,7 @@
                         program = gl.createProgram();
                         gl.attachShader(program, vs);
                         gl.attachShader(program, fs);
+                        gl.linkProgram(program);
 
                         if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS))
                             console.log(gl.getShaderInfoLog(vs));
@@ -76,7 +77,8 @@
                         program.aVertexPosition = gl.getAttribLocation(program, "aVertexPosition");
                         gl.enableVertexAttribArray(program.aVertexPosition);
                         gl.vertexAttribPointer(program.aVertexPosition, itemSize, gl.FLOAT, false, 0, 0);
-                        
+
+                        gl.drawArrays(gl.TRIANGLES, 0, numItems);
                     }
             </script>
     </head>
