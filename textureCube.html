@@ -132,15 +132,15 @@
         gl.bindTexture(gl.TEXTURE_2D, null);
     }
 
-    var neheTexture;
+    var leafTexture;
     function initTexture() {
-        neheTexture = gl.createTexture();
-        neheTexture.image = new Image();
-        neheTexture.image.onload = function () {
-            handleLoadedTexture(neheTexture)
+        leafTexture = gl.createTexture();
+        leafTexture.image = new Image();
+        leafTexture.image.onload = function () {
+            handleLoadedTexture(leafTexture)
         }
 
-        neheTexture.image.src = "nehe.gif";
+        leafTexture.image.src = "leaf.gif";
     }
 
 
@@ -305,7 +305,7 @@ function initBuffers() {
         gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, cubeVertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+        gl.bindTexture(gl.TEXTURE_2D, leafTexture);
         gl.uniform1i(shaderProgram.samplerUniform, 0);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
