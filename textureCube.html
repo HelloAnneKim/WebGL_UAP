@@ -6,6 +6,24 @@
          <h2></h2>
      </header>
 
+<head>
+<script type="text/javascript">
+    function webGLStart() {
+        var canvas = document.getElementById("lesson05-canvas");
+        initGL(canvas);
+        initShaders();
+        initBuffers();
+        initTexture();
+
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.enable(gl.DEPTH_TEST);
+
+        tick();
+    }
+</script>    
+</head>
+
+
 <body onload="webGLStart();">
     <a href="http://learningwebgl.com/blog/?p=507">&lt;&lt; Back to Lesson 5</a><br />
 
