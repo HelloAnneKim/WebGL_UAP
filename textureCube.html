@@ -8,6 +8,18 @@
 
 <head>
 <script type="text/javascript">
+    
+    var neheTexture;
+    function initTexture() {
+        neheTexture = gl.createTexture();
+        neheTexture.image = new Image();
+        neheTexture.image.onload = function () {
+            handleLoadedTexture(neheTexture)
+        }
+
+        neheTexture.image.src = "nehe.gif";
+    }
+
     function webGLStart() {
         var canvas = document.getElementById("lesson05-canvas");
         initGL(canvas);
