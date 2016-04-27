@@ -1,7 +1,7 @@
 /*
 Functions for Mouse detection events
 */
-(function(){
+(function() {
 
 var mouseDown = false;
 var lastMouseX = null;
@@ -22,10 +22,8 @@ function handleMouseUp(event) {
 
 function handleMouseMove(event) {
     if (!mouseDown) {
-        // ANNEYKIM: then mouse is up and not moving
         return;
     }
-    // ANNEYKIM: mousemove is a mousedown type of event
     var newX = event.clientX;
     var newY = event.clientY;
 
