@@ -1,0 +1,42 @@
+<html>
+        <header>
+        <h1>Texture Sampling for Squares</h1>
+<!--         <h3>Anne Kim is following this blog post: 
+        http://www.creativebloq.com/javascript/get-started-webgl-draw-square-7112981 
+        to make a square</h3> -->
+        <h2></h2>
+    </header>
+    <meta charset="utf-8"/>
+    <head>                 
+            <script type="text/javascript">
+                var context2D;
+                
+                // Fill the buffer with the values that define a rectangle.
+                function setSmallRectangle(x,y,color) {
+                    var c1 = color[0];
+                    var c2 = color[1];
+                    var c3 = color[2];
+
+                    context2D.fillStyle = 'rgb('+c1+','+c2+','+c3+')';
+                    context2D.fillRect(x,y,10,10)
+                }
+
+                function init(){
+                    var squaremakingcanvas = document.getElementById("squaremakingcanvas");
+
+                    context2D = squaremakingcanvas.getContext("2d");
+                    // TODO: use the different color samplings...
+                    setSmallRectangle(10,10,[200,0,0]);
+                    setSmallRectangle(30,30,[0,200,0]);
+                    setSmallRectangle(50,50,[0,0,20,20])
+                   
+                }
+            </script>
+    </head>
+    <body onload="init()">
+            <div class="container">
+                <canvas id="squaremakingcanvas" width="800" height="500"></canvas>
+
+            </div>
+    </body>
+</html>
