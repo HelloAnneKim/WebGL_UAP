@@ -1,3 +1,7 @@
+/*
+Functions for drawing squares with given coordinates
+*/
+
 (function() {
 
 var context2D = document.createElementById("squaremakingcanvas");
