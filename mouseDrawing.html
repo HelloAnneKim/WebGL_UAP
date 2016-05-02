@@ -25,11 +25,30 @@
         
     <!-- javascript of the page -->
     <script type="text/javascript">
+        var paintingColor;
+        var topLeftColor = [300,0.0,0.0];
+        var topRightColor = [0.0,300,0.0];
+        var bottomLeftColor = [0,0.0,300];
+        var bottomRightColor = [300,0.0,300];
+
+
         function continuousDrawing(event) {
-            if (mouseDown) {
-                setSmallSquare(lastMouseX-50,lastMouseY-100, [0.0,0.0,0.0]);
-            }
-    
+            console.log("painting x,y: "+lastMouseX+", "+lastMouseY);
+            paintingColor = [0,0,0];
+            // at the corners the paintingColor will change
+            if (lastMouseX<50 && lastMouseY<50) {
+                paintingColor = topLeftColor;
+            } else if (lastMouseX>750 && lastMouseY<50) {
+                paintingColor = topRightColor;
+            } else if (lastMouseX<50 && lastMouseY>450) {
+                paintingColor = bottomLeftColor;
+            } else if (lastMouseX>750 && lastMouseY>450) {
+                paintingColor = bottomRightColor;
+            } else if (mouseDown) { 
+                // Otherwise, when the mouse is down, it will paint
+                setSmallSquare(lastMouseX-50,lastMouseY-100, paintingColor);
+            } 
+            // else: do nothing
         }
 
         function init() {
@@ -66,17 +85,13 @@
             listenToMouse(canvas);
 
             // Draw Squares with lastMouseX and lastMouseY via mouse-utils.js
-            setSmallSquare(0,0,[300,0.0,0.0]);
-            setSmallSquare(790,0,[0.0,300,0.0]);
-            setSmallSquare(0,490,[0,0.0,300]);
-            setSmallSquare(790,490,[300,0.0,300]);
-            // Send coordinates to setSmallSquare via squareDrawing-utils.js
-            // canvas.onmousedown = continuousDrawing;
-            // document.onmousemove = continuousDrawing;
+            setLargeSquare(0,0, topLeftColor);
+            setLargeSquare(750,0,topRightColor);
+            setLargeSquare(0,450, bottomLeftColor);
+            setLargeSquare(750,450, bottomRightColor);
 
-            var nIntervId;
-            nIntervId = setInterval(continuousDrawing, 0);
-
+            canvas.addEventListener("mousedown",continuousDrawing);
+            document.addEventListener("mousemove", continuousDrawing);
         }
         
 

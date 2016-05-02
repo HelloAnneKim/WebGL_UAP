@@ -18,7 +18,7 @@ function setSmallSquare(x,y,[c1,c2,c3]) {
 
 function setLargeSquare(x,y,[c1,c2,c3]) {
     context2D.fillStyle = 'rgb('+c1+','+c2+','+c3+')';
-    context2D.fillRect(x,y,100,100);
+    context2D.fillRect(x,y,50,50);
 }
 
 
