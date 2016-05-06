@@ -21,6 +21,9 @@ function setupDisplayedCanvas(canvasWidth, canvasHeight, clearColor) {
     gl.viewport(0, 0, displayedCanvas.width, displayedCanvas.height);
     gl.clearColor(clearColor[0],clearColor[1],clearColor[2],clearColor[3]); 
     gl.clear(gl.COLOR_BUFFER_BIT);
+
+    gl.enable(gl.CULL_FACE);
+    gl.enable(gl.DEPTH_TEST);
 }
 
 function setupShaders() {
@@ -32,10 +35,14 @@ function setupShaders() {
     fs = gl.createShader(gl.FRAGMENT_SHADER);
     gl.shaderSource(fs, f);
     gl.compileShader(fs);
+
+    // setup GLSL program 
     program = gl.createProgram();
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
+
+    gl.useProgram(program);
 
     // Catch any errors
     if (!gl.getShaderParameter(vs, gl.COMPILE_STATUS))

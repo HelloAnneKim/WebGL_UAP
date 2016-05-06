@@ -8,18 +8,32 @@
     <script src="mouse-utils.js"></script>
     <script src="squareDrawing-utils.js"></script>
     <script src="webGLSetup-utils.js"></script>
+    <script src="paintedRectangle-utils.js"></script>
 
     <script id="vertex" type="x-shader">
-        attribute vec2 a_position;
-        void main() {gl_Position = vec4(a_position, 0.0, 1.0);}
+        attribute vec4 a_position;
+        attribute vec2 a_texcoord;
+
+        uniform mat4 u_matrix;
+
+        varying vec2 v_texcoord;
+
+        void main() {
+          // Multiply the position by the matrix.
+          gl_Position = u_matrix * a_position;
+
+          // Pass the texcoord to the fragment shader.
+          v_texcoord = a_texcoord;
+        }
     </script>
     <script id="fragment" type="x-shader">
-        #ifdef GL_ES
-        precision highp float;
-        #endif
-        uniform vec4 uColor;
+        precision mediump float;
+        // Passed in from the vertex shader.
+        varying vec2 v_texcoord;
+        // The texture.
+        uniform sampler2D u_texture;
         void main() {
-            gl_FragColor = uColor;
+           gl_FragColor = texture2D(u_texture, v_texcoord);
         }
     </script>
         
@@ -51,33 +65,6 @@
                 setSmallSquare(lastMouseX-shiftLeft,lastMouseY-shiftTop, paintingColor);
             } 
             // else: do nothing
-        }
-
-        function createPaintedRectangle() {
-            var aspect = displayedCanvas.width / displayedCanvas.height;
-            var vertices = new Float32Array([
-                    -0.25, 0.25*aspect, 0.25, 0.25*aspect,  0.25,-0.25*aspect,  // Triangle 1
-                    -0.25, 0.25*aspect, 0.25,-0.25*aspect, -0.25,-0.25*aspect   // Triangle 2
-                    ]);
-             
-            vbuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, vbuffer);                                       
-            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-             
-            itemSize = 2;
-            numItems = vertices.length / itemSize;
-
-            gl.useProgram(program);
-
-            program.uColor = gl.getUniformLocation(program, "uColor");
-            gl.uniform4fv(program.uColor, [100, 100, 0.0, 1.0]);
-             
-            // look up where the vertex data needs to go
-            program.a_position = gl.getAttribLocation(program, "a_position");
-            gl.enableVertexAttribArray(program.a_position);
-            gl.vertexAttribPointer(program.a_position, itemSize, gl.FLOAT, false, 0, 0);
-
-            gl.drawArrays(gl.TRIANGLES, 0, numItems);
         }
 
         function init() {
