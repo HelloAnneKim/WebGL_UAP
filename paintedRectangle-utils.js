@@ -799,14 +799,13 @@ function setTexcoords(gl) {
       gl.STATIC_DRAW);
 }
 
+var doneDrawing = true; 
+
 function createPaintedRectangle() {
 
   // look up where the vertex data needs to go.
   var positionLocation = gl.getAttribLocation(program, "a_position");
   var texcoordLocation = gl.getAttribLocation(program, "a_texcoord");
-
-  // lookup uniforms
-  var matrixLocation = gl.getUniformLocation(program, "u_matrix");
 
   // Create a buffer.
   var buffer = gl.createBuffer();
@@ -828,17 +827,19 @@ function createPaintedRectangle() {
   // Set Texcoords.
   setTexcoords(gl);
 
-  // Create a texture.
-  var texture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-  // Fill the texture with a 1x1 blue pixel.
-  // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-  //               new Uint8Array([0, 0, 255, 255]));
+  if (doneDrawing == false) { return;}
+
+  doneDrawing = false;
+
   // Asynchronously load an image
   image = new Image();
   // image.src = "mip-low-res-example.png";
   image.src = squareMakingCanvas.toDataURL();
   image.addEventListener('load', function() {
+      // Create a texture.
+      var texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+
     // Now that the image has loaded make copy it to the texture.
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image);
@@ -855,7 +856,7 @@ function createPaintedRectangle() {
     }
     drawScene();
   });
-
+}
 
   function isPowerOf2(value) {
     return (value & (value - 1)) == 0;
@@ -869,9 +870,6 @@ function createPaintedRectangle() {
     return d * Math.PI / 180;
   }
 
-  var fieldOfViewRadians = degToRad(60);
-
-  drawScene();
 
   // Draw the scene.
   function drawScene() {
@@ -882,6 +880,7 @@ function createPaintedRectangle() {
     var aspect = displayedCanvas.clientWidth / displayedCanvas.clientHeight;
     var zNear  = 1;
     var zFar   = 2000;
+    var fieldOfViewRadians = degToRad(60);
     var projectionMatrix =
         makePerspective(fieldOfViewRadians, aspect, zNear, zFar);
 
@@ -895,8 +894,8 @@ function createPaintedRectangle() {
     // Make a view matrix from the camera matrix.
     var viewMatrix = makeInverse(cameraMatrix);
 
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    // gl.bindTexture(gl.TEXTURE_2D, texture);
+    // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 
     var translationMatrix = makeTranslation(0, -0.125, 0);
     var zRotationMatrix = makeZRotation(0);
@@ -909,10 +908,14 @@ function createPaintedRectangle() {
     matrix = matrixMultiply(matrix, viewMatrix);
     matrix = matrixMultiply(matrix, projectionMatrix);
 
+    // lookup uniforms
+    var matrixLocation = gl.getUniformLocation(program, "u_matrix");
+
     // Set the matrix.
     gl.uniformMatrix4fv(matrixLocation, false, matrix);
 
     // Draw the geometry.
     gl.drawArrays(gl.TRIANGLES, 0, 1 * 6);
+
+    doneDrawing = true;
   }
-}
