@@ -20,8 +20,7 @@ function setupSquareMakingCanvas(canvasWidth, canvasHeight) {
     context2D = squareMakingCanvas.getContext("2d");
     squareMakingCanvas.style.width = canvasWidth;
     squareMakingCanvas.style.height = canvasHeight;
-    // squareMakingCanvas.style.left = shiftLeft;
-    // squareMakingCanvas.style.top = 
+    squareMakingCanvas.style.visibility = 'hidden';
 }
 
 function setupCornerColoringSquares(canvasWidth, canvasHeight) {
