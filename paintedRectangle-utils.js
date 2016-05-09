@@ -789,12 +789,12 @@ function setTexcoords(gl) {
       gl.ARRAY_BUFFER,
       new Float32Array(
         [
-        -3, -1,
-         2, -1,
-        -3,  4,
-        -3,  4,
-         2, -1,
-         2,  4,
+         0,  1,
+         1,  1,
+         0,  0,
+         0,  0,
+         1,  1,
+         1,  0,
       ]),
       gl.STATIC_DRAW);
 }
@@ -832,11 +832,12 @@ function createPaintedRectangle() {
   var texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   // Fill the texture with a 1x1 blue pixel.
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-                new Uint8Array([0, 0, 255, 255]));
+  // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+  //               new Uint8Array([0, 0, 255, 255]));
   // Asynchronously load an image
   image = new Image();
-  image.src = "mip-low-res-example.png";
+  // image.src = "mip-low-res-example.png";
+  image.src = squareMakingCanvas.toDataURL();
   image.addEventListener('load', function() {
     // Now that the image has loaded make copy it to the texture.
     gl.bindTexture(gl.TEXTURE_2D, texture);
