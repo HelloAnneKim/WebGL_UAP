@@ -772,12 +772,12 @@ var image;
 function setGeometry(gl) {
   var positions = new Float32Array(
     [
-    -1.36, -0.73,  0.5,
-     1.36, -0.73,  0.5,
-    -1.36,  0.96,  0.5,
-    -1.36,  0.96,  0.5,
-     1.36, -0.73,  0.5,
-     1.36,  0.96,  0.5,
+    -1.4, -0.74,  0.5,
+     1.4, -0.74,  0.5,
+    -1.4,  0.99,  0.5,
+    -1.4,  0.99,  0.5,
+     1.4, -0.74,  0.5,
+     1.4,  0.99,  0.5,
 
     ]);
   gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
