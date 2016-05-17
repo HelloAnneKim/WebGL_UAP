@@ -10,37 +10,36 @@ var largeSide;
 
 // parameters for colors
 var paintingColor = [0,0,0];
-var topLeftColor = [300,0.0,0.0];
-var topRightColor = [0.0,300,0.0];
-var bottomLeftColor = [0,0.0,300];
-var bottomRightColor = [300,0.0,300];
+var red = [300,0.0,0.0];
+var green = [0.0,300,0.0];
+var blue = [0,0.0,300];
+var pink = [300,0.0,300];
+var white = [360,360,360];
 
 function setupSquareMakingCanvas(canvasWidth, canvasHeight) {
     squareMakingCanvas = document.getElementById("squareMakingCanvas");
     context2D = squareMakingCanvas.getContext("2d");
     squareMakingCanvas.style.width = canvasWidth;
     squareMakingCanvas.style.height = canvasHeight;
-    // squareMakingCanvas.style.left = shiftLeft;
-    // squareMakingCanvas.style.top = 
+    squareMakingCanvas.style.visibility = 'hidden';
 }
 
 function setupCornerColoringSquares(canvasWidth, canvasHeight) {
-    setLargeSquare(0,0, topLeftColor);
-    setLargeSquare(canvasWidth-largeSide,0,topRightColor);
-    setLargeSquare(0,canvasHeight-largeSide, bottomLeftColor);
-    setLargeSquare(canvasWidth-largeSide,canvasHeight-largeSide, bottomRightColor);
+    setSmallSquare(0,0, white);
 }
 
 function setSmallSquare(x,y,[c1,c2,c3]) {
-    console.log("Drawing setSmallSquare: "+x + ", "+y);
-    console.log("Drawing setSmallSquare color: "+'rgb('+c1+','+c2+','+c3+')');
     context2D.fillStyle = 'rgb('+c1+','+c2+','+c3+')';
-    context2D.fillRect(x,y,smallSide,smallSide);
+    context2D.fillRect(x-(smallSide/2),y-(smallSide/2),smallSide,smallSide);
 }
 
 function setLargeSquare(x,y,[c1,c2,c3]) {
     context2D.fillStyle = 'rgb('+c1+','+c2+','+c3+')';
     context2D.fillRect(x,y,largeSide,largeSide);
+}
+
+function setPaintingColor(color) {
+    paintingColor = color;
 }
 
 
