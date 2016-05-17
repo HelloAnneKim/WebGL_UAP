@@ -768,17 +768,17 @@ Functions for Creating a Painted Rectangle with 3D geometry and textures
 // Fill the buffer with the values that define a plane.
 var displayedCanvas;
 var image;
+var scalingConstant = 1.2;
 
 function setGeometry(gl) {
   var positions = new Float32Array(
     [
-    -1.4, -0.74,  0.5,
-     1.4, -0.74,  0.5,
-    -1.4,  0.99,  0.5,
-    -1.4,  0.99,  0.5,
-     1.4, -0.74,  0.5,
-     1.4,  0.99,  0.5,
-
+    -1, -1,  1,
+     1, -1,  1,
+    -1,  1,  1,
+    -1,  1,  1,
+     1, -1,  1,
+     1,  1,  1,
     ]);
   gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 }
@@ -884,7 +884,7 @@ function createPaintedRectangle() {
     var projectionMatrix =
         makePerspective(fieldOfViewRadians, aspect, zNear, zFar);
 
-    var cameraPosition = [0, 0, 2];
+    var cameraPosition = [0, 0, 4];
     var up = [0, 1, 0];
     var target = [0, 0, 0];
 
@@ -894,12 +894,9 @@ function createPaintedRectangle() {
     // Make a view matrix from the camera matrix.
     var viewMatrix = makeInverse(cameraMatrix);
 
-    // gl.bindTexture(gl.TEXTURE_2D, texture);
-    // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-
-    var translationMatrix = makeTranslation(0, -0.125, 0);
+    var translationMatrix = makeTranslation(0, 0, 0);
     var zRotationMatrix = makeZRotation(0);
-    var scaleMatrix = makeScale(1, 1, 1);
+    var scaleMatrix = makeScale(scalingConstant*1, scalingConstant*1, scalingConstant*1);
 
     // Multiply the matrices.
     var matrix = scaleMatrix;

@@ -14,6 +14,7 @@ var red = [300,0.0,0.0];
 var green = [0.0,300,0.0];
 var blue = [0,0.0,300];
 var pink = [300,0.0,300];
+var white = [360,360,360];
 
 function setupSquareMakingCanvas(canvasWidth, canvasHeight) {
     squareMakingCanvas = document.getElementById("squareMakingCanvas");
@@ -24,17 +25,12 @@ function setupSquareMakingCanvas(canvasWidth, canvasHeight) {
 }
 
 function setupCornerColoringSquares(canvasWidth, canvasHeight) {
-    setLargeSquare(0,0, red);
-    setLargeSquare(canvasWidth-largeSide,0,green);
-    setLargeSquare(0,canvasHeight-largeSide, blue);
-    setLargeSquare(canvasWidth-largeSide,canvasHeight-largeSide, pink);
+    setSmallSquare(0,0, white);
 }
 
 function setSmallSquare(x,y,[c1,c2,c3]) {
-    console.log("Drawing setSmallSquare: "+x + ", "+y);
-    console.log("Drawing setSmallSquare color: "+'rgb('+c1+','+c2+','+c3+')');
     context2D.fillStyle = 'rgb('+c1+','+c2+','+c3+')';
-    context2D.fillRect(x,y,smallSide,smallSide);
+    context2D.fillRect(x-(smallSide/2),y-(smallSide/2),smallSide,smallSide);
 }
 
 function setLargeSquare(x,y,[c1,c2,c3]) {

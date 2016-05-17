@@ -9,8 +9,6 @@ function handleMouseDown(event) {
     mouseDown = true;
     lastMouseX = event.pageX;
     lastMouseY = event.pageY;
-    console.log("MouseDown x: "+lastMouseX);
-    console.log("MouseDown y: "+lastMouseY);
 }
 
 function handleMouseUp(event) {mouseDown = false;}
@@ -28,9 +26,6 @@ function handleMouseMove(event) {
 
     lastMouseX = newX
     lastMouseY = newY;
-
-    console.log("MouseMove x: "+lastMouseX);
-    console.log("MouseMove y: "+lastMouseY);
 }
 function listenToMouse(canvas) {
     canvas.onmousedown = handleMouseDown;

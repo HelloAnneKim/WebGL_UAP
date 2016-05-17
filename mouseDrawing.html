@@ -38,8 +38,7 @@
     </script>
         
     <script type="text/javascript">
-        // TODO: figure out how to set this up
-        var canvasWidth = 800;
+        var canvasWidth = 500;
         var canvasHeight = 500;
         var clearColor = [0, 0.2, 0.2, 0.2]; //baby blue
         var shiftLeft = 50;
@@ -50,21 +49,27 @@
         largeSide = 50;
 
         function continuousDrawing(event) {
-            console.log("painting x,y: "+lastMouseX+", "+lastMouseY);
-            // at the corners the paintingColor will change
-            if (lastMouseX<shiftLeft+largeSide && lastMouseY<shiftTop+largeSide) {
-                paintingColor = red;
-            } else if (lastMouseX>canvasWidth+shiftLeft-largeSide && lastMouseY<shiftTop+largeSide) {
-                paintingColor = green;
-            } else if (lastMouseX<shiftLeft+largeSide && lastMouseY>canvasHeight+shiftTop-largeSide) {
-                paintingColor = blue;
-            } else if (lastMouseX>canvasWidth+shiftLeft-largeSide && lastMouseY>canvasHeight+shiftTop-largeSide) {
-                paintingColor = pink;
-            } else if (mouseDown) { 
-                // Otherwise, when the mouse is down, it will paint
-                setSmallSquare(lastMouseX-shiftLeft,lastMouseY-shiftTop, paintingColor);
-            } 
-            // else: do nothing
+            if (mouseDown) {
+                centerX = ((canvasWidth/2))+shiftLeft;
+                centerY = ((canvasHeight/2))+shiftTop;
+
+                // taking into account the scaling of the canvas
+                scaledDistance = (42.315*(Math.pow(scalingConstant,2)))+(101.437*scalingConstant);
+
+                world_x_origin = centerX - scaledDistance;
+                world_y_origin = centerY - scaledDistance;
+
+                world_x_opposite_corner = centerX + scaledDistance;
+                world_y_opposite_corner = centerY + scaledDistance; 
+
+                percent_x = (lastMouseX - world_x_origin)/(world_x_opposite_corner - world_x_origin);
+                percent_y = (lastMouseY - world_y_origin)/(world_y_opposite_corner - world_y_origin);
+
+                x = (percent_x*canvasWidth);
+                y = (percent_y*canvasHeight);
+
+                setSmallSquare(x,y, paintingColor);
+            }
         }
 
         function init() {
@@ -81,7 +86,6 @@
             // create 3D rectangle to paint on
             createPaintedRectangle();
             displayedCanvas.addEventListener("mousemove",createPaintedRectangle);
-            // document.addEventListener("mouseup", createPaintedRectangle);
         }
     </script>
 </head>
@@ -93,13 +97,13 @@
         left:50px;
         top:100px;
         "
-        width="800" height="500">
+        width="500" height="500">
     </canvas>
     <canvas id="displayedCanvas" style="z-index: 1;
         position:absolute;
         left:50px;
         top:100px;
-        " width="800" height="500">
+        " width="500" height="500">
     </canvas>
 </body>
  <button onclick="setPaintingColor(red)">Red</button> 
